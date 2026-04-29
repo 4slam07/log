@@ -1,0 +1,87 @@
+{% extends 'learning_logs/base.html' %}
+
+{% block content %}
+
+<style>
+    .add-entry-btn {
+        position: fixed;
+        bottom: 50px;
+        right: 200px;
+        padding: 10px 16px;
+        background-color: #007BFF;
+        color: white;
+        text-decoration: none;
+        border-radius: 50px;
+        font-weight: bold;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .add-entry-btn:hover {
+        background-color: #0056b3;
+    }
+
+    .btn-edit-entry {
+        position: fixed;
+        bottom: 50px;
+        left: 200px;
+        padding: 10px 16px;
+        background-color: #007BFF;
+        color: white;
+        text-decoration: none;
+        border-radius: 50px;
+        font-weight: bold;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+
+    }
+
+    .btn edit-entry:hover {
+        background-color: #0056b3;
+    }
+</style>
+
+<p>Topic: {{ topic }}</p>
+
+<p>Entries:</p>
+
+<ul>
+    {% for entry in entries %}
+    <li>
+        <p>
+            {{ entry.date_added|date:'M d, Y H:i' }}
+        </p>
+        <p>
+            {{ entry.text|linebreaks }}
+        </p>
+        <!-- <p>
+            <a href="{% url 'learning_logs:new_entry' topic.id %}" class="btn add-new-entry-btn">Add a new entry</a>
+        </p> -->
+
+
+        <p>
+        <p>{{ entry.date_added|date:'M d, Y H:i' }}</p>
+        <p>{{ entry.text|linebreaks }}</p>
+        <a href="{% url 'learning_logs:edit_entry' entry.id %}" class="btn-edit-entry">Edit entry</a>
+        </p>
+    </li>
+    {% empty %}
+    <li>There are no entries yet.</li>
+    {% endfor %}
+
+
+    <a href="{% url 'learning_logs:new_entry' topic.id %}" class="btn add-entry-btn">
+        + Add New Entry
+    </a>
+
+
+    <ul>
+        {% for entry in entries %}
+        <li>{{ entry.text }}</li>
+        {% endfor %}
+    </ul>
+
+</ul>
+
+
+
+
+{% endblock content %}

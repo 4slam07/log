@@ -1,0 +1,121 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'accounts/style.css' %}">
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="{% static 'learning_logs/images/image.png' %}">    <title>Learning Logs</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f8;  
+            color: #333;
+            min-height: 100vh;
+        }
+
+        header {
+            background: linear-gradient(90deg, #2563eb, #1d4ed8);
+            padding: 16px 32px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.12);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .brand {
+            color: white;
+            text-decoration: none;
+            font-size: 1.6rem;
+            font-weight: bold;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 18px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .logout-btn {
+            background: white;
+            color: #2563eb;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        main {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 30px;
+            background: white;
+            border-radius: 14px;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+        }
+
+        .auth-btn {
+            padding: 10px 18px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            border: 2px solid white;
+            transition: all 0.2s ease;
+        }
+
+        .auth-btn.secondary {
+            background: transparent;
+            color: white;
+        }
+
+        .auth-btn.secondary:hover {
+            background: rgba(255, 255, 255, 0.12);
+        }
+
+        .auth-btn.primary {
+            background: white;
+            color: #2563eb;
+        }
+
+        .auth-btn.primary:hover {
+            background: #f3f4f6;
+        }
+    </style>
+
+</head>
+
+<body>
+    <header>
+        <a href="{% url 'learning_logs:index' %}" class="brand">📘 Learning Logs</a>
+
+        <div class="nav-links">
+            {% if user.is_authenticated %}
+            <span style="color:white;">Hello, {{ user.username }}</span>
+            <form action="{% url 'accounts:logout' %}" method="post" style="margin:0;">
+                {% csrf_token %}
+                <button class="logout-btn" name="submit">Log out</button>
+            </form>
+            {% else %}
+            <a href="{% url 'accounts:register' %}" class="auth-btn secondary">Register</a>
+            <a href="{% url 'accounts:login' %}" class="auth-btn primary">Log in</a>
+            {% endif %}
+        </div>
+    </header>
+
+    <main>
+        {% block content %}{% endblock content %}
+    </main>
+</body>
+
+</html>

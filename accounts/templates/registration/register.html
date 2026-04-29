@@ -1,0 +1,48 @@
+{% extends 'learning_logs/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="auth-wrapper">
+
+    <div class="auth-left">
+        <!-- <a href="{% url 'learning_logs:index' %}" class="back-link">&lt; Home Page</a> -->
+
+        <div class="left-content">
+            <h1>Get Started</h1>
+            <p>Already have an account?</p>
+            <a href="{% url 'accounts:login' %}" class="outline-btn">Log in</a>
+        </div>
+    </div>
+
+    <div class="auth-right">
+        <h2>Create Account</h2>
+        <p>Join Learning Logs and start tracking your progress.</p>
+
+        <form method="post">
+            {% csrf_token %}
+
+            <div class="form-group">
+                <label>Username</label>
+                {{ form.username }}
+                <small>{{ form.username.help_text }}</small>
+            </div>
+
+            <div class="form-group">
+                <label>Password</label>
+                {{ form.password1 }}
+                <small>{{ form.password1.help_text }}</small>
+            </div>
+
+            <div class="form-group">
+                <label>Confirm Password</label>
+                {{ form.password2 }}
+            </div>
+
+            <button type="submit" class="primary-btn">
+                Register
+            </button>
+        </form>
+    </div>
+
+</div>
+{% endblock content %}
